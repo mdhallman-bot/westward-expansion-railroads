@@ -225,6 +225,12 @@ actually mean as they come up today.</div>
   </div>
 </div>
 
+<div id="continue-hint" style="text-align:center; font-family:Arial, sans-serif; color:#888; font-style:italic; padding:30px 0;">
+  &darr;&nbsp; The rest of today's lesson is below &mdash; click "Reveal the full table" above to continue. &nbsp;&darr;
+</div>
+
+<div id="rest-of-lesson" style="display:none;">
+
 <!-- ============ DOCUMENT 2: BUFFALO ============ -->
 <span class="section-tag">Document 2</span>
 <h2>The Buffalo</h2>
@@ -371,6 +377,8 @@ actually mean as they come up today.</div>
 
 <div id="print-summary"></div>
 
+</div><!-- /#rest-of-lesson -->
+
 <script>
 // ============ CONFIG — fill in to match Code.gs deployment for this tool ============
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyBePQ2XJ1VldaUeXZOAqXKbpwqxYIzlUOS8li5ZeMGbAn9M3ehwrsXMXu7wKvNZSkDaw/exec';
@@ -426,6 +434,8 @@ function renderVocab() {
 // ---------- Predict / Reveal ----------
 function revealTable() {
   document.getElementById('full-table-wrap').classList.add('show');
+  document.getElementById('rest-of-lesson').style.display = 'block';
+  document.getElementById('continue-hint').style.display = 'none';
   scheduleAutoSave();
 }
 
@@ -780,7 +790,11 @@ async function loadState() {
   recognizedVocab = data.recognizedVocab || {};
   renderVocab();
   document.getElementById('predict-write').value = data.predictWrite || '';
-  if (data.tableRevealed) document.getElementById('full-table-wrap').classList.add('show');
+  if (data.tableRevealed) {
+    document.getElementById('full-table-wrap').classList.add('show');
+    document.getElementById('rest-of-lesson').style.display = 'block';
+    document.getElementById('continue-hint').style.display = 'none';
+  }
   econPlacements = data.econPlacements || {};
   renderEconBins();
   document.getElementById('econ-discuss').value = data.econDiscuss || '';
